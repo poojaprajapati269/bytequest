@@ -16,6 +16,7 @@
         <thead class="table-dark">
             <tr>
                 <th>#</th>
+                <th>Product ID</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
@@ -27,6 +28,7 @@
             @foreach ($products as $index => $product)
             <tr>
                 <td>{{ $index + 1 }}</td>
+                <td>{{ $product->id }}</td>
                 <td>{{ $product->name }}</td>
                 <td>{{ $product->description }}</td>
                 <td>{{ $product->price }}</td>
