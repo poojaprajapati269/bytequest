@@ -1,42 +1,86 @@
 <?php
 
+/**
+ * ProductController File
+ *
+ * PHP version 8.2.0
+ *
+ * @category  Controller
+ * @package   Bytequest
+ * @author    Your Name <bytequest@dummy.com>
+ * @license   MIT License
+ * @link      https://example.com
+ */
+
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+/**
+ * ProductController File
+ *
+ * PHP version 8.2.0
+ *
+ * @category  Controller
+ * @package   Bytequest
+ * @author    Your Name <bytequest@dummy.com>
+ * @license   MIT License
+ * @link      https://example.com
+ */
+
 class ProductController extends Controller
 {
+    /**
+     * get All Product Data In JSON Response.
+     *
+     * @return @JSON Response
+     */
     public function index()
     {
         return response()->json(Product::all());
     }
 
-    public function store(Request $request)
-    {
-        try {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255|unique:products,name',
-                'description' => 'required|string',
-                'price' => 'required|numeric|min:1',
-                'stock' => 'required|integer|min:0',
-            ]);
+    /**
+     * Store the Product Data in database use API.
+     *
+     * @param \Illuminate\Http\Request $request The request instance
+     *
+     * @return @JSON Response
+     */
 
-            $product = Product::create($validated);
-            return response()->json(['message' => 'Product created successfully', 'product' => $product], 201);
+     public function store(StoreProductRequest $request)
+     {
+         // If validation fails, Laravel will automatically return a 422 JSON response
+         $product = Product::create($request->validated());
 
-        } catch (\Illuminate\Validation\ValidationException $ex) {
-            return response()->json(['errors' => $ex->errors()], 422);
-        } catch (\Exception $ex) {
-            return response()->json(['error' => 'Something went wrong', 'message' => $ex->getMessage()], 500);
-        }
-    }
+         return response()->json([
+             'message' => 'Product created successfully',
+             'product' => $product
+         ], 201);
+     }
 
+     /**
+     * Fetch Product Data use API.
+     *
+     * @param $id.
+     *
+     * @return @JSON Response
+     */
 
     public function show($id)
     {
         return response()->json(Product::findOrFail($id));
     }
+
+    /**
+     * Update Product Data use API.
+     *
+     * @param \Illuminate\Http\Request $request The request instance
+     *
+     * @return @JSON Response
+     */
 
     public function update(Request $request, $id)
     {
@@ -45,6 +89,14 @@ class ProductController extends Controller
 
         return response()->json($product);
     }
+
+    /**
+     * Delete Product Data use API.
+     *
+     * @param $id
+     *
+     * @return @JSON Response
+     */
 
     public function destroy($id)
     {

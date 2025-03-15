@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductWebController;
 
-Route::get('/products', function () {
-    return view('products');
-});
+Route::resource('products', ProductWebController::class);

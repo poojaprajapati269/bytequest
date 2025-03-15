@@ -10,7 +10,7 @@
 
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
-            <a href="#" class="navbar-brand">My Laravel API</a>
+            <a href="#" class="navbar-brand">ByteQuest Products API</a>
         </div>
     </nav>
 
